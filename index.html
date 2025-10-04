@@ -5,93 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SpeedScript - Typing Speed Test</title>
 <style>
-    body {
-        background: #f0f4f7;
-        font-family: 'Poppins', sans-serif;
-        text-align: center;
-        padding: 40px;
-    }
-    h1 {
-        color: #333;
-        margin-bottom: 5px;
-    }
+  /* --- General Body --- */
+  body {
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    background: #1e1e2f;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
 
-    /* Quote styling */
-    .quote {
-        font-style: italic;
-        font-size: 20px;
-        font-weight: 500;
-        margin-bottom: 25px;
-        background: linear-gradient(270deg, #ff5f6d, #ffc371, #24c6dc, #514a9d);
-        background-size: 800% 800%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: gradientAnimation 8s ease infinite, fadeIn 2s ease forwards;
-        opacity: 0; /* start hidden for fade-in */
-    }
+  h1 {
+    font-size: 3rem;
+    margin: 10px 0 5px 0;
+    color: #ff7f50;
+  }
 
-    /* Gradient animation */
-    @keyframes gradientAnimation {
-        0%{background-position:0% 50%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 50%}
-    }
+  .quote {
+    font-style: italic;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    background: linear-gradient(270deg, #ff5f6d, #ffc371, #24c6dc, #514a9d);
+    background-size: 800% 800%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 8s ease infinite, fadeIn 2s ease forwards;
+    opacity: 0;
+  }
 
-    /* Fade-in effect */
-    @keyframes fadeIn {
-        0% { opacity: 0; transform: translateY(-10px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
+  @keyframes gradientAnimation {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
 
-    #loginSection, #testSection, #leaderboardSection {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 650px;
-        margin: 0 auto 25px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, textarea, button {
-        margin-top: 10px;
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 80%;
-    }
-    button {
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-        border: none;
-        width: auto;
-    }
-    button:hover {
-        background-color: #0056b3;
-    }
-    #text {
-        font-size: 18px;
-        margin-top: 15px;
-    }
-    #result {
-        margin-top: 15px;
-        font-size: 20px;
-        font-weight: bold;
-    }
-    #timer {
-        font-size: 22px;
-        margin-top: 10px;
-        color: #d9534f;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
+  @keyframes fadeIn {
+    0% { opacity:0; transform:translateY(-10px);}
+    100% { opacity:1; transform:translateY(0);}
+  }
+
+  /* --- Container Sections --- */
+  #loginSection, #testSection, #leaderboardSection {
+    background: #2b2b3f;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    margin: 15px 0;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  }
+
+  input, button, textarea {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+
+  input, textarea {
+    width: 80%;
+  }
+
+  button {
+    background: #ff7f50;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #ff5722;
+  }
+
+  /* --- Typing Area --- */
+  #textDisplay {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin: 20px 0;
+    text-align: left;
+    min-height: 120px;
+    padding: 10px;
+    background: #1f1f30;
+    border-radius: 10px;
+    color: #ccc;
+    user-select: none;
+  }
+
+  .word {
+    margin-right: 5px;
+  }
+
+  .current {
+    text-decoration: underline;
+    color: #ff7f50;
+  }
+
+  .correct {
+    color: #4caf50;
+  }
+
+  .incorrect {
+    color: #f44336;
+  }
+
+  #input {
+    width: 80%;
+    font-size: 1.2rem;
+    background: #1f1f30;
+    color: #fff;
+  }
+
+  #stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    font-size: 1.2rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    color: #eee;
+  }
+
 </style>
 </head>
 <body>
@@ -99,53 +146,60 @@
 <h1>⌨️ SpeedScript</h1>
 <div class="quote">“Type fast, stay focused, achieve greatness!”</div>
 
-<!-- Login Section -->
+<!-- Login -->
 <div id="loginSection">
-    <h3>Create Account / Login</h3>
-    <input type="text" id="username" placeholder="Enter your name"><br>
-    <button id="loginBtn">Start Typing Test</button>
+  <h3>Create Account / Login</h3>
+  <input type="text" id="username" placeholder="Enter your name"><br>
+  <button id="loginBtn">Start Typing Test</button>
 </div>
 
-<!-- Typing Test Section -->
+<!-- Typing Test -->
 <div id="testSection" style="display:none;">
-    <p id="welcome"></p>
-    <p><strong>Best Speed:</strong> <span id="bestScore">0</span> WPM</p>
+  <p id="welcome"></p>
+  <p><strong>Best WPM:</strong> <span id="bestScore">0</span></p>
 
-    <textarea id="customText" placeholder="Enter your custom text here..." rows="3"></textarea><br>
-    <button id="useCustom">Use My Text</button>
-    <button id="randomText">Use Random Text</button>
+  <textarea id="customText" placeholder="Enter custom text here..." rows="3"></textarea><br>
+  <button id="useCustom">Use My Text</button>
+  <button id="randomText">Use Random Text</button>
 
-    <div id="timer">⏳ 60s</div>
-    <p id="text"></p>
-    <textarea id="input" placeholder="Start typing here..." rows="5" disabled></textarea>
+  <div id="stats">
+    <div>⏳ Time: <span id="timer">60</span>s</div>
+    <div>⚡ WPM: <span id="wpm">0</span></div>
+    <div>🎯 Accuracy: <span id="accuracy">100</span>%</div>
+  </div>
 
-    <div id="result"></div>
-    <button id="restart" disabled>Restart Test</button><br><br>
-    <button id="logout">Logout</button>
+  <div id="textDisplay"></div>
+  <input type="text" id="input" placeholder="Start typing..." disabled><br>
+  <button id="restart" disabled>Restart Test</button>
+  <button id="logout">Logout</button>
 </div>
 
-<!-- Leaderboard Section -->
+<!-- Leaderboard -->
 <div id="leaderboardSection" style="display:none;">
-    <h3>🏆 Leaderboard</h3>
-    <table>
-        <thead>
-            <tr><th>User</th><th>Best WPM</th></tr>
-        </thead>
-        <tbody id="leaderboard"></tbody>
-    </table>
+  <h3>🏆 Leaderboard</h3>
+  <table>
+    <thead>
+      <tr><th>User</th><th>Best WPM</th></tr>
+    </thead>
+    <tbody id="leaderboard"></tbody>
+  </table>
 </div>
 
 <script>
-const texts = [
-    "Disaster management saves lives and reduces damage.",
-    "Technology helps connect people around the world.",
-    "Coding improves problem solving and logic thinking.",
-    "Assam is known for its tea, culture, and natural beauty.",
-    "Practice typing every day to increase your speed."
+const sampleTexts = [
+  "Practice makes perfect every single day.",
+  "Coding improves problem solving and logic thinking.",
+  "Stay focused and type fast to achieve greatness.",
+  "Assam is known for its tea, culture, and natural beauty.",
+  "Disaster management saves lives and reduces damage."
 ];
 
-let startTime, timerInterval, timeLeft = 60, currentUser = null;
+let words = [];
+let currentIndex = 0;
+let timerInterval, timeLeft = 60;
+let currentUser = null;
 
+// DOM
 const loginSection = document.getElementById('loginSection');
 const testSection = document.getElementById('testSection');
 const leaderboardSection = document.getElementById('leaderboardSection');
@@ -154,140 +208,168 @@ const loginBtn = document.getElementById('loginBtn');
 const logoutBtn = document.getElementById('logout');
 const welcomeEl = document.getElementById('welcome');
 const bestScoreEl = document.getElementById('bestScore');
-const textEl = document.getElementById('text');
+const textDisplay = document.getElementById('textDisplay');
 const inputEl = document.getElementById('input');
-const resultEl = document.getElementById('result');
-const restartBtn = document.getElementById('restart');
+const wpmEl = document.getElementById('wpm');
+const accuracyEl = document.getElementById('accuracy');
+const timerEl = document.getElementById('timer');
 const customTextEl = document.getElementById('customText');
 const useCustomBtn = document.getElementById('useCustom');
 const randomTextBtn = document.getElementById('randomText');
-const timerEl = document.getElementById('timer');
+const restartBtn = document.getElementById('restart');
 const leaderboardBody = document.getElementById('leaderboard');
 
 // --- LOGIN ---
 loginBtn.addEventListener('click', () => {
-    const username = usernameInput.value.trim();
-    if (!username) return alert("Please enter your name!");
-    currentUser = username;
-    const savedData = JSON.parse(localStorage.getItem(username)) || { best: 0 };
-    bestScoreEl.textContent = savedData.best;
-    welcomeEl.textContent = `Welcome, ${username}!`;
-    loginSection.style.display = "none";
-    testSection.style.display = "block";
-    leaderboardSection.style.display = "block";
-    updateLeaderboard();
+  const username = usernameInput.value.trim();
+  if(!username) return alert("Enter a username!");
+  currentUser = username;
+  const saved = JSON.parse(localStorage.getItem(username)) || {best:0};
+  bestScoreEl.textContent = saved.best;
+  welcomeEl.textContent = `Welcome, ${username}!`;
+  loginSection.style.display = "none";
+  testSection.style.display = "block";
+  leaderboardSection.style.display = "block";
+  updateLeaderboard();
 });
 
+// --- LOGOUT ---
 logoutBtn.addEventListener('click', () => {
-    currentUser = null;
-    testSection.style.display = "none";
-    leaderboardSection.style.display = "none";
-    loginSection.style.display = "block";
+  currentUser = null;
+  testSection.style.display = "none";
+  leaderboardSection.style.display = "none";
+  loginSection.style.display = "block";
 });
 
-// --- TYPING TEST ---
-function startTest(textToUse) {
-    textEl.textContent = textToUse;
+// --- SET TEXT ---
+function setText(txt){
+  words = txt.split(' ');
+  currentIndex = 0;
+  textDisplay.innerHTML = '';
+  words.forEach((w,i)=>{
+    const span = document.createElement('span');
+    span.innerText = w;
+    span.classList.add('word');
+    if(i===0) span.classList.add('current');
+    textDisplay.appendChild(span);
+  });
+  inputEl.value = '';
+  inputEl.disabled = false;
+  inputEl.focus();
+  resetStats();
+  startTimer();
+}
+
+// --- TIMER ---
+function startTimer(){
+  clearInterval(timerInterval);
+  timeLeft = 60;
+  timerEl.textContent = timeLeft;
+  timerInterval = setInterval(()=>{
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    if(timeLeft<=0){
+      clearInterval(timerInterval);
+      finishTest();
+    }
+  },1000);
+}
+
+// --- INPUT HANDLER ---
+inputEl.addEventListener('input', ()=>{
+  const currentWord = words[currentIndex];
+  const typed = inputEl.value.trim();
+  const span = textDisplay.children[currentIndex];
+  if(typed === currentWord){
+    span.classList.remove('current');
+    span.classList.add('correct');
+    currentIndex++;
+    if(currentIndex<words.length){
+      textDisplay.children[currentIndex].classList.add('current');
+    }
     inputEl.value = '';
-    resultEl.textContent = '';
-    inputEl.disabled = false;
-    restartBtn.disabled = false;
-    timeLeft = 60;
-    timerEl.textContent = `⏳ ${timeLeft}s`;
-    inputEl.focus();
-    startTime = new Date();
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        timerEl.textContent = `⏳ ${timeLeft}s`;
-        if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            finishTest();
-        }
-    }, 1000);
-}
-
-function finishTest() {
-    inputEl.disabled = true;
-    const textEntered = inputEl.value;
-    const originalText = textEl.textContent;
-    const wordCount = textEntered.trim().split(/\s+/).length;
-    const timeTaken = 60 - timeLeft;
-    const speed = Math.round((wordCount / timeTaken) * 60) || 0;
-    const accuracy = calculateAccuracy(originalText, textEntered);
-    resultEl.innerHTML = `✅ Speed: ${speed} WPM<br>🎯 Accuracy: ${accuracy}%`;
-    saveBestScore(speed);
-    updateLeaderboard();
-}
-
-inputEl.addEventListener('input', () => {
-    const textEntered = inputEl.value;
-    const originalText = textEl.textContent;
-    if (textEntered === originalText) {
-        clearInterval(timerInterval);
-        finishTest();
+  }else{
+    if(currentWord.startsWith(typed)){
+      span.classList.remove('incorrect');
+    }else{
+      span.classList.add('incorrect');
     }
+  }
+  updateStats();
 });
 
-function calculateAccuracy(original, typed) {
-    const originalWords = original.split(' ');
-    const typedWords = typed.split(' ');
-    let correct = 0;
-    for (let i = 0; i < typedWords.length; i++) {
-        if (typedWords[i] === originalWords[i]) correct++;
-    }
-    return Math.round((correct / originalWords.length) * 100);
+// --- STATS ---
+function updateStats(){
+  const typedWords = textDisplay.querySelectorAll('.correct').length;
+  const elapsed = 60 - timeLeft;
+  const speed = elapsed>0 ? Math.round((typedWords/elapsed)*60) : 0;
+  wpmEl.textContent = speed;
+  const errors = textDisplay.querySelectorAll('.incorrect').length;
+  const totalTyped = typedWords + errors;
+  const acc = totalTyped>0 ? Math.round((typedWords/totalTyped)*100) : 100;
+  accuracyEl.textContent = acc;
 }
 
-// --- SAVE BEST SCORE ---
-function saveBestScore(score) {
-    if (!currentUser) return;
-    const userData = JSON.parse(localStorage.getItem(currentUser)) || { best: 0 };
-    if (score > userData.best) {
-        userData.best = score;
-        localStorage.setItem(currentUser, JSON.stringify(userData));
-        bestScoreEl.textContent = score;
-    }
+// --- FINISH ---
+function finishTest(){
+  inputEl.disabled = true;
+  const finalWPM = parseInt(wpmEl.textContent);
+  saveBest(finalWPM);
+  updateLeaderboard();
 }
 
-// --- LEADERBOARD ---
-function updateLeaderboard() {
-    leaderboardBody.innerHTML = '';
-    const users = Object.keys(localStorage);
-    const data = users.map(u => {
-        const { best } = JSON.parse(localStorage.getItem(u));
-        return { name: u, best };
-    });
-    data.sort((a, b) => b.best - a.best);
-    data.slice(0, 10).forEach(user => {
-        const row = `<tr><td>${user.name}</td><td>${user.best}</td></tr>`;
-        leaderboardBody.innerHTML += row;
-    });
+// --- SAVE BEST ---
+function saveBest(score){
+  if(!currentUser) return;
+  const data = JSON.parse(localStorage.getItem(currentUser)) || {best:0};
+  if(score>data.best){
+    data.best = score;
+    localStorage.setItem(currentUser, JSON.stringify(data));
+    bestScoreEl.textContent = score;
+  }
+}
+
+// --- RESET ---
+function resetStats(){
+  wpmEl.textContent = 0;
+  accuracyEl.textContent = 100;
+  restartBtn.disabled = false;
 }
 
 // --- BUTTONS ---
-useCustomBtn.addEventListener('click', () => {
-    const customText = customTextEl.value.trim();
-    if (customText.length > 0) startTest(customText);
-    else alert("Please enter your own text first!");
+useCustomBtn.addEventListener('click', ()=>{
+  const txt = customTextEl.value.trim();
+  if(txt) setText(txt);
+  else alert("Enter custom text first!");
 });
 
-randomTextBtn.addEventListener('click', () => {
-    const randomText = texts[Math.floor(Math.random() * texts.length)];
-    startTest(randomText);
+randomTextBtn.addEventListener('click', ()=>{
+  const txt = sampleTexts[Math.floor(Math.random()*sampleTexts.length)];
+  setText(txt);
 });
 
-restartBtn.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    inputEl.value = '';
-    textEl.textContent = '';
-    resultEl.textContent = '';
-    inputEl.disabled = true;
-    restartBtn.disabled = true;
-    customTextEl.value = '';
-    timerEl.textContent = "⏳ 60s";
+restartBtn.addEventListener('click', ()=>{
+  clearInterval(timerInterval);
+  inputEl.value='';
+  textDisplay.innerHTML='';
+  wpmEl.textContent=0;
+  accuracyEl.textContent=100;
+  timerEl.textContent=60;
+  customTextEl.value='';
 });
+
+// --- LEADERBOARD ---
+function updateLeaderboard(){
+  leaderboardBody.innerHTML='';
+  const users = Object.keys(localStorage);
+  const data = users.map(u=>{
+    const b = JSON.parse(localStorage.getItem(u)).best;
+    return {name:u,best:b};
+  }).sort((a,b)=>b.best-a.best);
+  data.slice(0,10).forEach(u=>{
+    leaderboardBody.innerHTML += `<tr><td>${u.name}</td><td>${u.best}</td></tr>`;
+  });
+}
 </script>
-
 </body>
 </html>
