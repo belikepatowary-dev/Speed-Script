@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SpeedScript - Typing Speed Test</title>
 <style>
-  /* --- General Body --- */
   body {
     margin:0;
     font-family: 'Poppins', sans-serif;
@@ -16,6 +15,7 @@
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    transition: background 0.3s, color 0.3s;
   }
 
   h1 {
@@ -34,6 +34,7 @@
     -webkit-text-fill-color: transparent;
     animation: gradientAnimation 8s ease infinite, fadeIn 2s ease forwards;
     opacity: 0;
+    transition: all 0.3s;
   }
 
   @keyframes gradientAnimation {
@@ -47,8 +48,7 @@
     100% { opacity:1; transform:translateY(0);}
   }
 
-  /* --- Container Sections --- */
-  #loginSection, #testSection, #leaderboardSection {
+  #loginSection, #testSection, #leaderboardSection, #settingsPanel {
     background: #2b2b3f;
     padding: 20px;
     border-radius: 15px;
@@ -56,9 +56,10 @@
     max-width: 800px;
     margin: 15px 0;
     box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    transition: background 0.3s, color 0.3s;
   }
 
-  input, button, textarea {
+  input, button, textarea, select {
     margin-top: 10px;
     padding: 10px;
     font-size: 16px;
@@ -67,7 +68,7 @@
     outline: none;
   }
 
-  input, textarea {
+  input, textarea, select {
     width: 80%;
   }
 
@@ -82,9 +83,8 @@
     background: #ff5722;
   }
 
-  /* --- Typing Area --- */
   #textDisplay {
-    font-size: 1.5rem;
+    font-size: 24px;
     line-height: 2rem;
     margin: 20px 0;
     text-align: left;
@@ -94,6 +94,7 @@
     border-radius: 10px;
     color: #ccc;
     user-select: none;
+    transition: font-size 0.3s, font-family 0.3s, background 0.3s;
   }
 
   .word {
@@ -118,6 +119,7 @@
     font-size: 1.2rem;
     background: #1f1f30;
     color: #fff;
+    transition: background 0.3s, color 0.3s;
   }
 
   #stats {
@@ -139,12 +141,51 @@
     color: #eee;
   }
 
+  #settingsPanel label {
+    display:block;
+    margin:5px 0;
+  }
+
 </style>
 </head>
 <body>
 
 <h1>⌨️ SpeedScript</h1>
 <div class="quote">“Type fast, stay focused, achieve greatness!”</div>
+
+<button id="settingsBtn">⚙ Settings</button>
+<div id="settingsPanel" style="display:none;">
+  <h4>Settings</h4>
+  <label>Typing Time:
+    <select id="timeSelect">
+      <option value="15">15s</option>
+      <option value="30">30s</option>
+      <option value="60" selected>60s</option>
+      <option value="120">120s</option>
+    </select>
+  </label>
+  <label>Font Size:
+    <input type="number" id="fontSizeInput" value="24" min="14" max="48"> px
+  </label>
+  <label>Font Style:
+    <select id="fontStyleSelect">
+      <option value="Poppins" selected>Poppins</option>
+      <option value="Arial">Arial</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Georgia">Georgia</option>
+    </select>
+  </label>
+  <label>Theme:
+    <select id="themeSelect">
+      <option value="dark" selected>Dark</option>
+      <option value="light">Light</option>
+    </select>
+  </label>
+  <label>
+    <input type="checkbox" id="showQuote" checked> Show Motivational Quote
+  </label>
+  <button id="applySettings">Apply</button>
+</div>
 
 <!-- Login -->
 <div id="loginSection">
@@ -218,6 +259,14 @@ const useCustomBtn = document.getElementById('useCustom');
 const randomTextBtn = document.getElementById('randomText');
 const restartBtn = document.getElementById('restart');
 const leaderboardBody = document.getElementById('leaderboard');
+const settingsBtn = document.getElementById('settingsBtn');
+const settingsPanel = document.getElementById('settingsPanel');
+const timeSelect = document.getElementById('timeSelect');
+const fontSizeInput = document.getElementById('fontSizeInput');
+const fontStyleSelect = document.getElementById('fontStyleSelect');
+const themeSelect = document.getElementById('themeSelect');
+const showQuote = document.getElementById('showQuote');
+const quoteDiv = document.querySelector('.quote');
 
 // --- LOGIN ---
 loginBtn.addEventListener('click', () => {
@@ -241,7 +290,37 @@ logoutBtn.addEventListener('click', () => {
   loginSection.style.display = "block";
 });
 
-// --- SET TEXT ---
+// --- SETTINGS ---
+settingsBtn.addEventListener('click', ()=>{
+  settingsPanel.style.display = settingsPanel.style.display==='none' ? 'block':'none';
+});
+
+document.getElementById('applySettings').addEventListener('click', ()=>{
+  timeLeft = parseInt(timeSelect.value);
+  timerEl.textContent = timeLeft;
+
+  textDisplay.style.fontSize = fontSizeInput.value + 'px';
+  textDisplay.style.fontFamily = fontStyleSelect.value;
+
+  if(themeSelect.value==='dark'){
+    document.body.style.background='#1e1e2f';
+    document.body.style.color='#eee';
+    textDisplay.style.background='#1f1f30';
+    inputEl.style.background='#1f1f30';
+    inputEl.style.color='#fff';
+  } else{
+    document.body.style.background='#f5f5f5';
+    document.body.style.color='#222';
+    textDisplay.style.background='#fff';
+    inputEl.style.background='#fff';
+    inputEl.style.color='#222';
+  }
+
+  quoteDiv.style.display = showQuote.checked?'block':'none';
+  settingsPanel.style.display='none';
+});
+
+// --- TEXT SET ---
 function setText(txt){
   words = txt.split(' ');
   currentIndex = 0;
@@ -263,7 +342,6 @@ function setText(txt){
 // --- TIMER ---
 function startTimer(){
   clearInterval(timerInterval);
-  timeLeft = 60;
   timerEl.textContent = timeLeft;
   timerInterval = setInterval(()=>{
     timeLeft--;
@@ -354,7 +432,7 @@ restartBtn.addEventListener('click', ()=>{
   textDisplay.innerHTML='';
   wpmEl.textContent=0;
   accuracyEl.textContent=100;
-  timerEl.textContent=60;
+  timerEl.textContent=timeLeft;
   customTextEl.value='';
 });
 
